@@ -1,3 +1,7 @@
+;; Team 77
+;; - Tobias Pucher (S5751659)
+;; - Matthias Heiden (S5751616)
+
 (clear-all)
 
 (define-model tutor-model
@@ -292,6 +296,7 @@
     !output! (=s1 =s0) ;; s1 includes carry if happened, output result and stop
 )
 
+;; Specify a chunk to place in the goal buffer when the model starts to run.
 (goal-focus g0)
 
 )

@@ -1,3 +1,7 @@
+;; Team 77
+;; - Tobias Pucher (S5751659)
+;; - Matthias Heiden (S5751616)
+
 ; Define a chunk-type for counting
 (defchunk-type count
   (number))

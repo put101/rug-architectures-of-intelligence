@@ -1,4 +1,9 @@
-Tobias Pucher, Matthias Haiden
+## Team 77
+- Tobias Pucher (S5751659)
+- Matthias Heiden (S5751616)
+
+## Trace
+
 Trace of adding 24 and 57 together
 
 ```
