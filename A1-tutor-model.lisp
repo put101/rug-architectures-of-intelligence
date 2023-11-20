@@ -1,3 +1,27 @@
+(clear-all)
+
+(define-model tutor-model
+    
+(sgp :esc t :lf .05 :trace-detail medium)
+
+;; how does mental column-addition work?
+;; the goal is to add two numbers
+;; for this we use smaller chunks that represent the basic
+;; addition operations so that we can add the numbers up
+;; columnwise from lowest to highest with respect to the carry
+
+;; Add Chunk-types here
+(chunk-type add-digits a b sumDigit carry sum)
+;; a + b = sum + carry
+
+;; a1a0 + b1b0 = sum1sum0 + carry
+(chunk-type add-numbers a1 a0 b1 b0 sum1 sum0 carry state) 
+;; represents column-wise addition of two 2-digit numbers
+
+;; Add Chunks here
+;; addition knowledge for two digits (a,b) and carry
+;; and additions for adding a carry of 1 to possible results
+(add-dm
 (c-add-d00 ISA add-digits a 0 b 0 sumDigit 0 carry 0 sum 0)
 (c-add-d01 ISA add-digits a 0 b 1 sumDigit 1 carry 0 sum 1)
 (c-add-d02 ISA add-digits a 0 b 2 sumDigit 2 carry 0 sum 2)
@@ -138,3 +162,136 @@
 (c-add-c117 ISA add-digits a 1 b 17 sumDigit 8 carry 1 sum 18)
 (c-add-c118 ISA add-digits a 1 b 18 sumDigit 9 carry 1 sum 19)
 (c-add-c119 ISA add-digits a 1 b 19 sumDigit 0 carry 2 sum 20)
+
+
+;; define the number digits: a1a0 + b1b0 = sum1sum0 (sum1 includes last carry)
+(g0 ISA add-numbers a1 9 a0 9 b1 9 b0 9 sum1 nil sum0 nil carry nil state nil)
+)
+
+;; Add productions here
+
+;; initial production for adding two 2-digit numbers
+(p init-adding
+=goal>
+    isa add-numbers
+    sum0 nil
+    carry nil
+    a0 =a0
+    b0 =b0 
+==>
+=goal> ;; set to process first digit
+    sum0 "waiting"
++retrieval> ;; retrieve the first digit sum
+    isa add-digits
+    a =a0
+    b =b0
+)
+
+
+(p process-s0-no-carry ;; zero carry
+=goal>
+    ISA add-numbers
+    sum0 "waiting"
+    sum1 nil 
+    a0 =a0 
+    b0 =b0 
+    a1 =a1 ;; to prepare next step
+    b1 =b1
+=retrieval> ;; digit sum retrieval contains carry information
+    isa add-digits
+    a =a0
+    b =b0
+    sumDigit =s 
+    carry 0 ;; important matching criteria
+==>
+=goal>
+    ISA add-numbers
+    sum0 =s
+    sum1 "waiting" ;; process next digit
+    carry nil ;; no carry for next digit
++retrieval>
+    isa add-digits
+    a =a1 ;; request sum for next digit processing
+    b =b1
+)
+
+(p process-s0-carry
+=goal>
+    ISA add-numbers
+    sum0 "waiting"
+    sum1 nil
+    a0 =a0
+    b0 =b0
+    a1 =a1 ;; to prepare next step
+    b1 =b1
+=retrieval>
+    isa add-digits
+    a =a0
+    b =b0
+    sumDigit =s
+    carry 1 ;; important matching criteria
+==>
+=goal>
+    ISA add-numbers
+    sum0 =s
+    sum1 "waiting"
+    carry 1
++retrieval> ;;retrieve sum of next digit
+    isa add-digits
+    a =a1
+    b =b1
+)
+
+
+;; processes the first digit of the sum, no carry-in to respect
+(p process-s1-no-carry-in
+=goal>
+    ISA add-numbers
+    sum1 "waiting"
+    carry nil
+=retrieval>
+    isa add-digits
+    sum =s ;; take sum of a1+b1
+==>
+=goal>
+    ISA add-numbers
+    sum1 =s ;;set the sum directly (including carry) because no more steps needed
+    state "done" ;; next step is is done 
+)
+
+
+;; processes the second digit of the sum with carry-in from prev. sum-digit
+;; the carry-in is added to the sum of the second digit
+(p process-s1-carry-in
+=goal>
+    ISA add-numbers
+    sum1 "waiting"
+    carry 1
+=retrieval>
+    isa add-digits
+    sum =s ;; sum of a1+b1 (carry included)
+==>
+=goal>
+    ISA add-numbers
+    carry nil
+    ;; next step process s1 again but without carry
++retrieval>
+    isa add-digits
+    a 1 ;; 1 must be "a" because of how dm add chunkes are defined
+    b =s 
+)
+
+;; done has also matching pattern for no carry formating in output
+(p done-s1
+=goal>
+    state "done"
+    sum1 =s1
+    sum0 =s0
+==>
+-goal> ;;clear goal
+    !output! (=s1 =s0) ;; s1 includes carry if happened, output result and stop
+)
+
+(goal-focus g0)
+
+)
