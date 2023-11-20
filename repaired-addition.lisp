@@ -20,7 +20,7 @@
  (eight isa number number eight next nine)
  (nine isa number number nine next ten)
  (ten isa number number ten)
- (test-goal ISA add arg1 zero arg2 zero)) ;; ERR: goal never focused / used
+ (test-goal ISA add arg1 two arg2 three)) ;; ERR: goal never focused / used, and number should be adjusted, e.g 2+3
 
 (P initialize-addition
    =goal>
