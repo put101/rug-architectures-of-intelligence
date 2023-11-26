@@ -1,6 +1,25 @@
 In a separate pdf file, show the outcomes of your model in a table or a figure, (i.e., what reaction times it predicts) and answer the following questions: 
 
 
+## Experiment result
+
+```
+? (subitize-experiment)
+CORRELATION:  0.980
+MEAN DEVIATION:  0.201
+Items    Current Participant   Original Experiment
+  1         0.54  (T  )               0.60
+  2         0.72  (T  )               0.65
+  3         0.90  (T  )               0.70
+  4         1.09  (T  )               0.86
+  5         1.27  (T  )               1.12
+  6         1.46  (T  )               1.50
+  7         1.64  (T  )               1.79
+  8         1.83  (T  )               2.13
+  9         2.02  (T  )               2.15
+ 10         2.20  (T  )               2.58
+```
+
 ## The reaction times produced by your subitizing model will probably not fit the human reaction times perfectly. In what way(s) do they differ from each other? Discuss absolute deviation of the reaction times, as well as the general pattern of times.
 
 Observations increases in times for different patterns (number of letters)
