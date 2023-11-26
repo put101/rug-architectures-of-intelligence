@@ -7,7 +7,7 @@ Observations increases in times for different patterns (number of letters)
 - This can be seen as the average time increase for each new item in the range 1 to 4 items is (0.86-0.60)/4 = 65ms
 - The average time increase for the rest of the items is (2.58 -0.86) / 6 = 28.6ms
 
-Because the model is linear the average reactiontime increase of 18ms per item applies to all experiment sizes and is therefore fundamentally different than the real human model or "curve".
+Because the model is linear the average reaction time increase of 18ms per item applies to all experiment sizes and is therefore fundamentally different than the real human model or "curve".
 
 - The models reaction times for 1 letter is very human like.
 - For patterns with smaller numbers the linear model gives worse reaction times than humans. 
