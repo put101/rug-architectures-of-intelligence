@@ -1,3 +1,7 @@
+;; Team 77
+;; - Tobias Pucher (S5751659)
+;; - Matthias Heiden (S5751616)
+
 (clear-all)
 
 (define-model subitize
@@ -103,7 +107,6 @@
       cmd         press-key
       key         =num
 )
-
 
 (goal-focus goal)
 
