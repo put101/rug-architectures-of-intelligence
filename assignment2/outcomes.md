@@ -43,3 +43,4 @@ Because the model is linear the average reaction time increase of 18ms per item 
 
 - For a larger amount of numbers humans reaction time also does not behave very linear. This can be due to the fact that humans have to make a "counting path" to follow, or think about which ones were already visited, which the model neglects with the parameters of finst set to 10, which we know is too high and the real number should be around 4 instead (to subitize small batches/patterns faster)
 
+![](./plot.png)
