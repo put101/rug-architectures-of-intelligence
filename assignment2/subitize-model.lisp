@@ -54,7 +54,7 @@
    =goal>
       ISA         count
       step        find-location
-      count       =num      ; Get the next number by retrieving the corresponding chunk from DM
+      count       =num           ; Get the next number by retrieving the corresponding chunk from DM
    =visual-location>
    ?visual>
       state       free
@@ -65,8 +65,8 @@
       cmd         move-attention ; attention gets visual object given this location
       screen-pos  =visual-location
    +retrieval>
-       number   =num    ; Retrieve the number chunk from DM that is equal to our current count;
-                        ; count has no information on next number, so we have to retrieve number to get number.next
+       number   =num             ; Retrieve the number chunk from DM that is equal to our current count;
+                                 ; count has no information on next number, so we have to retrieve number to get number.next
 )
 
 ; Encode the letter by increasing the count and
@@ -82,7 +82,7 @@
    =visual>
    =retrieval>
       number    =num
-      next      =num_next   ; Bind next number to 'num_next'
+      next      =num_next           ; Bind next number to 'num_next'
 ==>
    ;; Update count and find the next letter. 
    =goal>
@@ -124,7 +124,7 @@
       ISA         speak
       cmd         speak
       string      =vocal
-   -goal>                        ; clear goal buffer to stop the model, no production will match on cleared goal
+   -goal>                     ; clear goal buffer to stop the model, no production will match on cleared goal
 )
 
 (goal-focus goal)
