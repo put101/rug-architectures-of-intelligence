@@ -68,7 +68,6 @@
        number   =num    ; Retrieve number and bind to 'num'
 )
 
-; d
 (P encode-letter
    =goal>
       ISA         count
@@ -88,7 +87,18 @@
       :attended    nil
 )
 
-
+; No more letters can be found, so start responding.
+(P start-respond
+   =goal>
+      ISA         count
+      count       =num
+   ; Can't find more elements
+   ?visual-location>
+      buffer      failure
+==>
+   =goal>
+      step        respond
+)
 
 ; Respond by typing the count.
 (P respond
