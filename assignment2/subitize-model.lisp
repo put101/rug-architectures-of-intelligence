@@ -110,14 +110,13 @@
       number      =num ; request the number associated to the current cound (to get the vocal-rep)
 )
 
-; WRONG: Respond by typing the count.
-; respond by placing the vocal-rep representation of the count into the vocal buffer via speak command
+; Respond by placing the vocal-rep representation of the count into the vocal buffer via speak command
 (P do-respond
    =goal>
       ISA         count
       step        respond
    =retrieval>
-      vocal-rep   =vocal ; get the vocal-rep for the count number
+      vocal-rep   =vocal       ; get the vocal-rep for the count number
    ?vocal>   
       state       free
 ==>
@@ -125,7 +124,7 @@
       ISA         speak
       cmd         speak
       string      =vocal
-   -goal> ; clear goal buffer to stop the model, no production will match on cleared goal
+   -goal>                        ; clear goal buffer to stop the model, no production will match on cleared goal
 )
 
 (goal-focus goal)
