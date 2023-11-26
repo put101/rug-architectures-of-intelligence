@@ -29,14 +29,13 @@
         (eleven isa number number eleven)
         (goal isa count step start)
 
-
         (start)
         (encode isa chunk)
         (respond isa chunk) 
         (done isa chunk)
 )
 
-; start point for the model, retrieve unaattended letter and start counting with zero
+; Start point for the model, retrieve unattended letter and start counting with zero
 ; next step is find-location
 (P find-unattended-letter
    =goal>
@@ -50,14 +49,12 @@
       count       zero
 )
 
-
-; Attend each letter one-by-one. 
-; visual-location 
+; Attend each letter one-by-one.
 (P attend-letter
    =goal>
       ISA         count
       step        find-location
-      count       =num      ; TODO: Why do we need this? -> to get the next number by retrieving the corresponding chunk from DM
+      count       =num      ; Get the next number by retrieving the corresponding chunk from DM
    =visual-location>
    ?visual>
       state       free
@@ -68,17 +65,15 @@
       cmd         move-attention ; attention gets visual object given this location
       screen-pos  =visual-location
    +retrieval>
-       number   =num    ; Retrieve number and bind to 'num'
-                        ; Tobias: retrieve the number chunk from DM that is equal to our current count;
+       number   =num    ; Retrieve the number chunk from DM that is equal to our current count;
                         ; count has no information on next number, so we have to retrieve number to get number.next
 )
 
 ; Encode the letter by increasing the count and
-; the RHS updates the goal count by one and clears the location chunk and requestss an unattened letter 
-; when this block is received than the attend-letter fill fire and the cycle continues
+; the RHS updates the goal count by one and clears the location chunk and requests an unattended letter 
+; when this block is received then the attend-letter will fire and the cycle continues
 ; but if this retrieval fails because all letters have been attended, then find-location will not match
 ; instead the start-respond production will match on this buffer-failure and reporting will begin)
-
 (P encode-letter
    =goal>
       ISA         count
@@ -92,13 +87,15 @@
    ;; Update count and find the next letter. 
    =goal>
       ISA         count
-      step        find-location ; step to find next unattended letter
+      step        find-location     ; step to find next unattended letter
       count        =num_next
    +visual-location>
-      :attended    nil
+      :attended    nil              ; request parameter: vision module should try to find the location of an object
+                                    ; that the model has not yet looked at (=not attended)
 )
 
 ; No more letters can be found, so start responding.
+; This production will match when the retrieval of the next number fails, because all letters have been attended.
 (P start-respond
    =goal>
       ISA         count
