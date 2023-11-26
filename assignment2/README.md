@@ -5,4 +5,5 @@ This works:
 (load-act-r-model "ACT-R:tutorial;lisp;subitize.lisp")
 
 Create hard link for the file:
-ln $(pwd)/assignment2/subitize.lisp ~/Downloads/linux_standalone/ACT-R/tutorial/unit3/subitize-model.lisp  
+mv ~/Downloads/ACT-R/tutorial/unit3/subitize-model.lisp ~/Downloads/ACT-R/tutorial/unit3/subitize-model.lisp.old
+ln $(pwd)/assignment2/subitize-model.lisp ~/Downloads/ACT-R/tutorial/unit3/subitize-model.lisp  
