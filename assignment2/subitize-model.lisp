@@ -98,22 +98,24 @@
 ==>
    =goal>
       step        respond
+   +retrieval>
+      number      =num
 )
 
 ; Respond by typing the count.
-(P respond
+(P do-respond
    =goal>
       ISA         count
       step        respond
-      count       =num
-   ?manual>   
+   =retrieval>
+      vocal-rep   =vocal
+   ?vocal>   
       state       free
 ==>
-   =goal>
-      step        done
-   +manual>
-      cmd         press-key
-      key         =num
+   +vocal>
+      cmd         speak
+      string      =vocal
+   -goal>
 )
 
 (goal-focus goal)
