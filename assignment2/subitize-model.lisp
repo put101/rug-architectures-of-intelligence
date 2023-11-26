@@ -7,12 +7,10 @@
 (define-model subitize
 
 (sgp :seed (123456 0))
-(sgp :v t :show-focus t :trace-detail high)
-
-; (sgp :v t)
-; (sgp :show-focus t 
-;      :visual-num-finsts 10 
-;      :visual-finst-span 10)
+(sgp :v t)
+(sgp :show-focus t 
+     :visual-num-finsts 10 
+     :visual-finst-span 10)
 
 (chunk-type count count step)
 (chunk-type number number next vocal-rep)
@@ -47,7 +45,7 @@
       :attended    nil
    =goal>
       step        find-location
-    ;   count       zero
+      count       zero
 )
 
 
@@ -56,7 +54,7 @@
    =goal>
       ISA         count
       step        find-location
-    ;   count       =num      ; TODO: Why do we need this? 
+      count       =num      ; TODO: Why do we need this? 
    =visual-location>
    ?visual>
       state       free
@@ -66,8 +64,8 @@
    +visual>
       cmd         move-attention
       screen-pos  =visual-location
-;    +retrieval>
-;        number   =num    ; Retrieve number and bind to 'num'
+   +retrieval>
+       number   =num    ; Retrieve number and bind to 'num'
 )
 
 ; d
