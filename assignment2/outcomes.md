@@ -1,3 +1,8 @@
+## Team 77
+- Tobias Pucher (S5751659)
+- Matthias Heiden (S5751616)
+
+
 In a separate pdf file, show the outcomes of your model in a table or a figure, (i.e., what reaction times it predicts) and answer the following questions: 
 
 
