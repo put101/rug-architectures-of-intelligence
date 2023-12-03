@@ -192,7 +192,7 @@
      string       =word
    =goal>
      target       =let
-     state        count
+     state        count ;; Idea: Do not start counting but try to recall (retrieval) and start counting if failure to retrieve
    =imaginal>
    )
 

@@ -6,6 +6,8 @@ ln $(pwd)/assignment3/zbrodoff-model.lisp ~/Downloads/ACT-R/tutorial/unit4/zbrod
 
 Load zbrodoff.lisp (inside tutorial/lisp) and run this in the ACT-R console: 
 ```
+(actr-load "ACT-R:tutorial;lisp;zbrodoff.lisp")
+
 (zbrodoff-compare 1)
 (zbrodoff-compare 5)
 
