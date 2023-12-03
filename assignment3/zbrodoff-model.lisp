@@ -13,6 +13,8 @@
 
 (sgp :show-focus t)
 
+;; (sgp :act t)
+
 (chunk-type problem arg1 arg2 result)
 (chunk-type goal state count target next-let next-num)
 (chunk-type number number next visual-rep vocal-rep)
@@ -38,7 +40,9 @@
  (k ISA letter letter k next l visual-rep "k" vocal-rep "k")
  (l ISA letter letter l)
  (goal ISA goal)
- (attending) (read) (count) (counting) (encode))
+ (attending) (read) (count) (counting) (encode) 
+ (try-recall) ;; added new state
+ )
 
 (set-visloc-default screen-x lowest)
 
@@ -192,10 +196,46 @@
      string       =word
    =goal>
      target       =let
-     state        count ;; Idea: Do not start counting but try to recall (retrieval) and start counting if failure to retrieve
+     state        try-recall ;; Idea: Do not start counting but try to recall (retrieval) and start counting if failure to retrieve
+   +retrieval> 
+    arg1 =a1
+    arg2 =a2
    =imaginal>
    )
 
+(p can-recall ;; successful recall
+  =goal>
+    state try-recall
+  =imaginal>
+    arg1 =a1
+    arg2 =a2
+  =retrieval> ;; retrieve chunk that counted the given args previously (result can differ from imaginal)
+    isa problem
+    arg1 =a1
+    arg2 =a2
+    result =prev_res ;; result is the chunk that counted the given args previously
+==> ;; in the end result (imaginal) is compared to target (goal)
+  =imaginal> ;; prevent harvest
+  =goal>
+    count =prev_res ;; use remebred count
+    state count ;;
+)
+
+;; can't recall -> start counting
+(p cant-recall
+  =goal>
+    isa goal
+    state try-recall
+  =imaginal>
+    arg1 =a1
+    arg2 =a2
+  ?retrieval>
+    buffer failure
+==>
+  =goal>
+    state count ;; continue with counting
+  =imaginal>
+)
 
 (P start-counting
    =goal>
@@ -264,7 +304,7 @@
      cmd         subvocalize
      string      =txt
    =imaginal>
-     result      =let
+     result      =let ;; updates the result to next-letter (problem chunk)
    +retrieval>
      ISA         number
      number      =n
