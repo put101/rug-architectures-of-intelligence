@@ -6,7 +6,10 @@
 
 (define-model zbrodoff
     
-(sgp :v nil :esc t :lf 0.4 :bll 0.5 :ans 0.5 :rt 0 :ncnar nil)
+(sgp :show-focus t 
+     :visual-num-finsts 10 
+     :visual-finst-span 10)
+(sgp :v t :esc t :lf 0.4 :bll 0.5 :ans 0.5 :rt 0 :ncnar nil)
 
 (sgp :show-focus t)
 
@@ -21,7 +24,7 @@
  (two   ISA number number two next three visual-rep "2" vocal-rep "two")
  (three ISA number number three next four visual-rep "3" vocal-rep "three")
  (four  ISA number number four next five visual-rep "4" vocal-rep "four")
- (five  isa number number five)
+ (five  ISA number number five)
  (a ISA letter letter a next b visual-rep "a" vocal-rep "a")
  (b ISA letter letter b next c visual-rep "b" vocal-rep "b")
  (c ISA letter letter c next d visual-rep "c" vocal-rep "c")
@@ -32,9 +35,9 @@
  (h ISA letter letter h next i visual-rep "h" vocal-rep "h")
  (i ISA letter letter i next j visual-rep "i" vocal-rep "i")
  (j ISA letter letter j next k visual-rep "j" vocal-rep "j")
- (k isa letter letter k next l visual-rep "k" vocal-rep "k")
- (l isa letter letter l)
- (goal isa goal)
+ (k ISA letter letter k next l visual-rep "k" vocal-rep "k")
+ (l ISA letter letter l)
+ (goal ISA goal)
  (attending) (read) (count) (counting) (encode))
 
 (set-visloc-default screen-x lowest)
@@ -89,7 +92,7 @@
      arg1          nil
    ?vocal>
      preparation   free
-   ==>
+==>
    +vocal>
      cmd           subvocalize
      string        =word
@@ -110,7 +113,7 @@
      isa         problem
     - arg1       nil
      arg2        nil
-   ==>
+==>
    =imaginal>
    +retrieval>
      isa         number
@@ -183,7 +186,7 @@
      arg2         =a2
    ?vocal>
      preparation  free
-   ==>
+==>
    +vocal>
      cmd          subvocalize
      string       =word
@@ -224,7 +227,7 @@
      vocal-rep   =t
    ?vocal>
      state       free
-   ==>
+==>
    +vocal>
      isa         subvocalize
      string      =t
@@ -254,7 +257,7 @@
      vocal-rep   =txt
    ?vocal>
      state       free
-   ==>
+==>
    =goal>
      next-let    =new
    +vocal>
@@ -304,7 +307,7 @@
    
    ?manual>
      state       free
-   ==>
+==>
    +goal>
      
    +manual>
@@ -324,7 +327,7 @@
    
    ?manual>
      state       free
-   ==>
+==>
    +goal>
      
    +manual>
