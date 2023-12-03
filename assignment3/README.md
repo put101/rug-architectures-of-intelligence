@@ -16,8 +16,8 @@ In a separate pdf file, show the output of your model, and answer the following 
   - **Reason**: The activation of a chunk also determines how long it takes to retrieve it. It's a linear multiplier. If the latency factor is increased, then the retrieval takes longer and vice versa.
     - Retrieval time: `RT = Fe^{−A}`
 - Activation noise, s (:ans  range 0.1-0.8)
-  - **Effect**: TODO: higher or lower?
-  - **Reason**: Likelyhood of retrieving a chunk regardless of context.
+  - **Effect**: The higher the :ans value, the more noise will be added to the activation of a chunk.
+  - **Reason**: The activation noise is modelled after a Logistic distribution. Increasing the s (scale) parameter, means that the distribution is wider. This means that the activation of a chunk is more likely to be higher or lower than the actual activation. This means that the retrieval is less accurate.
   - Also known as: instantaneous noise (s), recomputed at each retrieval attempt.
 
 ## The model you constructed uses two strategies sequentially. First, it fires production rules that try to retrieve the answer from memory. If that retrieval fails, it fires production rules that calculate the answer through counting. This model is inspired by an older model from Gordon Logan. This original model executed both strategies (counting and retrieval) in parallel. That is, it attempted to retrieve the answer and, at the same time, it started to count. The final answer was provided by the strategy that finished first. Would it be possible to implement such a parallel strategy in ACT-R? If yes, what would such a model look like? If no, why is it not possible?
