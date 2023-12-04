@@ -35,7 +35,7 @@ The human experiment which should be approximated gave the following results:
 - correlation is quite good already
 - model is too fast overall -> high deviation
 
-Parameters: latency factor, base-level decay rate, activation noise, and retrieval  threshold
+Parameters to change: latency factor, instantaneous activation noise, retrieval  threshold
 
 `(sgp :v t :esc t :lf 0.4 :bll 0.5 :ans 0.5 :rt 0 :ncnar nil`
 
@@ -50,6 +50,8 @@ Block  1  1.360 (64)  1.558 (64)  2.232 (64)
 Block  2  1.017 (64)  1.102 (64)  1.177 (64)
 Block  3  1.026 (64)  0.996 (64)  0.991 (64)
 ```
+
+```
  :rt 0.8
 
 CORRELATION:  0.977
@@ -60,8 +62,9 @@ Block  1  1.470 (64)  1.850 (64)  2.258 (64)
 Block  2  1.150 (64)  1.422 (64)  1.375 (64)
 Block  3  0.993 (64)  1.062 (64)  1.069 (64)
 NIL
+```
 
-
+```
 :rt 0.93
 
 CORRELATION:  0.986
@@ -72,7 +75,9 @@ Block  1  1.816 (64)  2.362 (64)  2.532 (64)
 Block  2  1.118 (64)  1.320 (64)  1.544 (64)
 Block  3  1.068 (64)  1.096 (64)  1.196 (64)
 NIL
+```
 
+```
 :rt 0.95
 
 CORRELATION:  0.993
@@ -83,12 +88,33 @@ Block  1  1.790 (64)  2.213 (64)  2.631 (64)
 Block  2  1.207 (64)  1.296 (64)  1.479 (64)
 Block  3  1.122 (64)  1.167 (64)  1.162 (64)
 NIL
+```
+
+# FINAL Tuning Result
+The previously found rt:0.95 is the starting point for fine tuning, which was performed incrementally on the other parameters.
+
+- a little higher response time in the first block but similar results in the last 2 blocks would be better.
+
+After some more finetuning of the other parameters:
+(sgp :v nil :esc t :lf 0.35 :bll 0.5 :ans 0.5 :rt 0.9 :ncnar nil)
+
+- A slightly lower retrieval threshold and a slightly reduced latency factor yielded the best results:
 
 
-# FINAL Tuning
-**-> rt=0.95**
+## Final Parameter
+`(sgp :v nil :esc t :lf 0.35 :bll 0.5 :ans 0.5 :rt 0.9 :ncnar nil)`
 
-a little higher response time in the first block but similar results in the last 2 blocks would be better.
 
-?? I could not find a better solution even when adjusting the others, makes it only worse..
-also the 0.12 is not very consistent..
+## Final Performace
+```
+? (zbrodoff-compare 5)
+CORRELATION:  0.995
+MEAN DEVIATION:  0.084
+
+              2 (64)      3 (64)      4 (64)
+Block  1  1.776 (64)  2.370 (64)  2.647 (64)
+Block  2  1.249 (64)  1.371 (64)  1.518 (64)
+Block  3  1.103 (64)  1.173 (64)  1.142 (64)
+NIL
+```
+
