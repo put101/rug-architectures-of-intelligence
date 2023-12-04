@@ -84,6 +84,8 @@ Block  2  1.207 (64)  1.296 (64)  1.479 (64)
 Block  3  1.122 (64)  1.167 (64)  1.162 (64)
 NIL
 
+
+# FINAL Tuning
 **-> rt=0.95**
 
 a little higher response time in the first block but similar results in the last 2 blocks would be better.
