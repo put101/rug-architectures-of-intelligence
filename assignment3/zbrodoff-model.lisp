@@ -9,7 +9,7 @@
 (sgp :show-focus t 
      :visual-num-finsts 10 
      :visual-finst-span 10)
-(sgp :v t :esc t :lf 0.35 :bll 0.5 :ans 0.5 :rt 0.9 :ncnar nil)
+(sgp :v nil :esc t :lf 0.375 :bll 0.5 :ans 0.45 :rt 1.1 :ncnar nil)
 
 (sgp :show-focus t)
 

@@ -102,19 +102,33 @@ After some more finetuning of the other parameters:
 
 
 ## Final Parameter
-`(sgp :v nil :esc t :lf 0.35 :bll 0.5 :ans 0.5 :rt 0.9 :ncnar nil)`
+`(sgp :v nil :esc t :lf 0.375 :bll 0.5 :ans 0.45 :rt 1.1 :ncnar nil)`
 
 
 ## Final Performace
+
+Provided consistently good results over many "compare 5" runs.
+
 ```
+? (actr-load "ACT-R:tutorial;lisp;zbrodoff.lisp")
+T
 ? (zbrodoff-compare 5)
-CORRELATION:  0.995
-MEAN DEVIATION:  0.084
+CORRELATION:  0.994
+MEAN DEVIATION:  0.065
 
               2 (64)      3 (64)      4 (64)
-Block  1  1.776 (64)  2.370 (64)  2.647 (64)
-Block  2  1.249 (64)  1.371 (64)  1.518 (64)
-Block  3  1.103 (64)  1.173 (64)  1.142 (64)
+Block  1  1.899 (64)  2.459 (64)  2.692 (64)
+Block  2  1.286 (64)  1.379 (64)  1.470 (64)
+Block  3  1.122 (64)  1.141 (64)  1.191 (64)
+NIL
+? (zbrodoff-compare 5)
+CORRELATION:  0.984
+MEAN DEVIATION:  0.128
+
+              2 (64)      3 (64)      4 (64)
+Block  1  1.905 (64)  2.244 (64)  2.606 (64)
+Block  2  1.316 (64)  1.328 (64)  1.563 (64)
+Block  3  1.087 (64)  1.184 (64)  1.209 (64)
 NIL
 ```
 
