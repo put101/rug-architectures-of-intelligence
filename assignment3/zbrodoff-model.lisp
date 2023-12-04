@@ -9,7 +9,7 @@
 (sgp :show-focus t 
      :visual-num-finsts 10 
      :visual-finst-span 10)
-(sgp :v t :esc t :lf 0.4 :bll 0.5 :ans 0.5 :rt 0 :ncnar nil)
+(sgp :v t :esc t :lf 0.4 :bll 0.5 :ans 0.5 :rt 0.95 :ncnar nil)
 
 (sgp :show-focus t)
 
@@ -206,6 +206,7 @@
 (p can-recall ;; successful recall
   =goal>
     state try-recall
+    target =let
   =imaginal>
     arg1 =a1
     arg2 =a2
@@ -216,9 +217,9 @@
     result =prev_res ;; result is the chunk that counted the given args previously
 ==> ;; in the end result (imaginal) is compared to target (goal)
   =imaginal> ;; prevent harvest
+    result =prev_res ;; will be compared to target in the final productions
   =goal>
-    count =prev_res ;; use remebred count
-    state count ;;
+    count =a2 ;; just to trigger the final productions
 )
 
 ;; can't recall -> start counting
