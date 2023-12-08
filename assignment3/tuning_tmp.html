@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>tuning.md</title>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+
+<style>
+/* https://github.com/microsoft/vscode/blob/master/extensions/markdown-language-features/media/markdown.css */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family: var(--vscode-markdown-font-family, -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif);
+	font-size: var(--vscode-markdown-font-size, 14px);
+	padding: 0 26px;
+	line-height: var(--vscode-markdown-line-height, 22px);
+	word-wrap: break-word;
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-light.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-dark.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+}
+
+h1, h2, h3 {
+	font-weight: normal;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left-width: 5px;
+	border-left-style: solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 1em;
+	line-height: 1.357em;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+pre code {
+	color: var(--vscode-editor-foreground);
+	tab-size: 4;
+}
+
+/** Theming */
+
+.vscode-light pre {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+</style>
+
+<style>
+/* Tomorrow Theme */
+/* http://jmblog.github.com/color-themes-for-google-code-highlightjs */
+/* Original theme - https://github.com/chriskempson/tomorrow-theme */
+
+/* Tomorrow Comment */
+.hljs-comment,
+.hljs-quote {
+	color: #8e908c;
+}
+
+/* Tomorrow Red */
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-regexp,
+.hljs-deletion {
+	color: #c82829;
+}
+
+/* Tomorrow Orange */
+.hljs-number,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-literal,
+.hljs-type,
+.hljs-params,
+.hljs-meta,
+.hljs-link {
+	color: #f5871f;
+}
+
+/* Tomorrow Yellow */
+.hljs-attribute {
+	color: #eab700;
+}
+
+/* Tomorrow Green */
+.hljs-string,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-addition {
+	color: #718c00;
+}
+
+/* Tomorrow Blue */
+.hljs-title,
+.hljs-section {
+	color: #4271ae;
+}
+
+/* Tomorrow Purple */
+.hljs-keyword,
+.hljs-selector-tag {
+	color: #8959a8;
+}
+
+.hljs {
+	display: block;
+	overflow-x: auto;
+	color: #4d4d4c;
+	padding: 0.5em;
+}
+
+.hljs-emphasis {
+	font-style: italic;
+}
+
+.hljs-strong {
+	font-weight: bold;
+}
+</style>
+
+<style>
+/*
+ * Markdown PDF CSS
+ */
+
+ body {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif, "Meiryo";
+	padding: 0 12px;
+}
+
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+code {
+	font-size: 14px;
+	line-height: 19px;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+</style>
+
+<script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+</head>
+<body>
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: document.body.classList.contains('vscode-dark') || document.body.classList.contains('vscode-high-contrast')
+          ? 'dark'
+          : 'default'
+    });
+  </script>
+<h2 id="initial-performance">Initial performance</h2>
+<p>The results after implementing the retrieval were as follows:</p>
+<pre class="hljs"><code><div>? (zbrodoff-compare 5)
+...
+
+CORRELATION:  0.971
+MEAN DEVIATION:  0.673
+
+              2 (64)      3 (64)      4 (64)
+Block  1  1.224 (64)  1.366 (64)  1.393 (64)
+Block  2  1.041 (64)  1.009 (64)  1.022 (64)
+Block  3  0.999 (64)  1.006 (64)  1.026 (64)
+NIL
+? (actr-load &quot;ACT-R:tutorial;lisp;zbrodoff.lisp&quot;)
+? (zbrodoff-compare 1)
+...
+
+CORRELATION:  0.933
+MEAN DEVIATION:  0.666
+
+              2 (64)      3 (64)      4 (64)
+Block  1  1.347 (64)  1.318 (64)  1.429 (64)
+Block  2  1.001 (64)  1.027 (64)  1.004 (64)
+Block  3  0.991 (64)  0.985 (64)  0.980 (64)
+NIL
+</div></code></pre>
+<p>The human experiment which should be approximated gave the following results:</p>
+<p><img src="file:///Users/tobiaspucher/GitHub/me/jku/5-semester/rug-architectures-of-intelligence/assignment3/human-experiment.png" alt="Human experiment results"></p>
+<h2 id="parameter-tuning">Parameter tuning</h2>
+<ul>
+<li>correlation is quite good already</li>
+<li>model is too fast overall -&gt; high deviation</li>
+</ul>
+<p>Parameters to change: latency factor, instantaneous activation noise, retrieval  threshold</p>
+<p><code>(sgp :v t :esc t :lf 0.4 :bll 0.5 :ans 0.5 :rt 0 :ncnar nil</code></p>
+<h3 id="retrieval-threshold">Retrieval threshold</h3>
+<p>by adjusting the retreival threshold: <code>:rt 0.5</code></p>
+<pre class="hljs"><code><div>CORRELATION:  0.957
+MEAN DEVIATION:  0.434
+
+              2 (64)      3 (64)      4 (64)
+Block  1  1.360 (64)  1.558 (64)  2.232 (64)
+Block  2  1.017 (64)  1.102 (64)  1.177 (64)
+Block  3  1.026 (64)  0.996 (64)  0.991 (64)
+</div></code></pre>
+<pre class="hljs"><code><div> :rt 0.8
+
+CORRELATION:  0.977
+MEAN DEVIATION:  0.314
+
+              2 (64)      3 (64)      4 (64)
+Block  1  1.470 (64)  1.850 (64)  2.258 (64)
+Block  2  1.150 (64)  1.422 (64)  1.375 (64)
+Block  3  0.993 (64)  1.062 (64)  1.069 (64)
+NIL
+</div></code></pre>
+<pre class="hljs"><code><div>:rt 0.93
+
+CORRELATION:  0.986
+MEAN DEVIATION:  0.130
+
+              2 (64)      3 (64)      4 (64)
+Block  1  1.816 (64)  2.362 (64)  2.532 (64)
+Block  2  1.118 (64)  1.320 (64)  1.544 (64)
+Block  3  1.068 (64)  1.096 (64)  1.196 (64)
+NIL
+</div></code></pre>
+<pre class="hljs"><code><div>:rt 0.95
+
+CORRELATION:  0.993
+MEAN DEVIATION:  0.120
+
+              2 (64)      3 (64)      4 (64)
+Block  1  1.790 (64)  2.213 (64)  2.631 (64)
+Block  2  1.207 (64)  1.296 (64)  1.479 (64)
+Block  3  1.122 (64)  1.167 (64)  1.162 (64)
+NIL
+</div></code></pre>
+<h1 id="final-tuning-result">FINAL Tuning Result</h1>
+<p>The previously found rt:0.95 is the starting point for fine tuning, which was performed incrementally on the other parameters.</p>
+<ul>
+<li>a little higher response time in the first block but similar results in the last 2 blocks would be better.</li>
+</ul>
+<p>After some more finetuning of the other parameters:
+(sgp :v nil :esc t :lf 0.35 :bll 0.5 :ans 0.5 :rt 0.9 :ncnar nil)</p>
+<ul>
+<li>A slightly lower retrieval threshold and a slightly reduced latency factor yielded the best results:</li>
+</ul>
+<h2 id="final-parameter">Final Parameter</h2>
+<p><code>(sgp :v t :esc t :lf 0.375 :bll 0.5 :ans 0.45 :rt 1.1 :ncnar nil)</code></p>
+<h2 id="final-performace">Final Performace</h2>
+<p>Provided consistently good results over many &quot;compare 5&quot; runs.</p>
+<pre class="hljs"><code><div>? (actr-load &quot;ACT-R:tutorial;lisp;zbrodoff.lisp&quot;)
+T
+? (zbrodoff-compare 5)
+CORRELATION:  0.994
+MEAN DEVIATION:  0.065
+
+              2 (64)      3 (64)      4 (64)
+Block  1  1.899 (64)  2.459 (64)  2.692 (64)
+Block  2  1.286 (64)  1.379 (64)  1.470 (64)
+Block  3  1.122 (64)  1.141 (64)  1.191 (64)
+NIL
+? (zbrodoff-compare 5)
+CORRELATION:  0.984
+MEAN DEVIATION:  0.128
+
+              2 (64)      3 (64)      4 (64)
+Block  1  1.905 (64)  2.244 (64)  2.606 (64)
+Block  2  1.316 (64)  1.328 (64)  1.563 (64)
+Block  3  1.087 (64)  1.184 (64)  1.209 (64)
+NIL
+</div></code></pre>
+
+</body>
+</html>

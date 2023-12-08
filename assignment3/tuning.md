@@ -102,7 +102,7 @@ After some more finetuning of the other parameters:
 
 
 ## Final Parameter
-`(sgp :v nil :esc t :lf 0.375 :bll 0.5 :ans 0.45 :rt 1.1 :ncnar nil)`
+`(sgp :v t :esc t :lf 0.375 :bll 0.5 :ans 0.45 :rt 1.1 :ncnar nil)`
 
 
 ## Final Performace
