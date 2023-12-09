@@ -20,3 +20,6 @@ Usage:
 (onehit-learning game_count show_graph)
 (onehit-learning 50)
 ```
+
+Hands output: 
+The items in the list are the counts of the model’s wins, the opponent’s wins, the times when both players bust, and the times when they are tied
