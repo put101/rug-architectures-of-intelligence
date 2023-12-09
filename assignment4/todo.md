@@ -1,0 +1,1 @@
+partial matching and it must be able to learn verses a variety of opponents and with different distributions of cards in the decks
