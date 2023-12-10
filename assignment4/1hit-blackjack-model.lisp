@@ -7,7 +7,7 @@
        :cache-sim-hook-results t :er t :lf 0)
   
   ;; adjust these as needed
-  (sgp :v nil :ans .2 :mp 10.0 :rt -60)
+  (sgp :v t :ans .2 :mp 10.0 :rt -60)
   
   ;; This type holds all the game info 
   
@@ -56,6 +56,7 @@
      =goal>
        isa game-state
        state retrieving
+     ;; Failed to retrieve information
      ?retrieval>
        buffer  failure
      ?manual>
@@ -67,10 +68,13 @@
        cmd press-key
        key "s")
   
+  ;; Condition: Retrieving state, and could remember a move
+  ;; Action: Press the key with the action that was remembered
   (p remember-game-was-win
      =goal>
        isa game-state
        state retrieving
+     ;; Successfully retrieved information
      =retrieval>
        isa learned-info
        action =act ;; action for the remembered mstart
@@ -80,6 +84,7 @@
     ==>
      =goal>
        state nil
+     ;; Press the key with the action that was retrieved
      +manual>
        cmd press-key
        key =act
