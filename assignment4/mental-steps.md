@@ -12,3 +12,9 @@ Things to improve for those two main steps:
 2. How it interprets the feedback at the end of the hand so that it creates chunks which have appropriate information about the actions it should take based on the information that is available
    Current:
    Better:
+
+
+if winner: 
+   store it
+else:
+   clear without harvesting
