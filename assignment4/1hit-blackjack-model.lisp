@@ -33,6 +33,8 @@
   ;; Provide a keyboard for the model's motor module to use
   (install-device '("motor" "keyboard"))
   
+  ;; Condition: Match on start state and value in MC1 (first model card).
+  ;; Action: Set goal buffer state to 'retrieving' and try to remember a move.
   (p start
      =goal>
        isa game-state
@@ -44,8 +46,11 @@
      +retrieval>
        isa learned-info
        MC1 =c
+       ;; Remove any existing value from the buffer? 
      - action nil)
 
+  ;; Condition: Retrieving state, but couldn't remember a move
+  ;; Action: Reset the goal buffer and press 's'
   (p cant-remember-game
      =goal>
        isa game-state
