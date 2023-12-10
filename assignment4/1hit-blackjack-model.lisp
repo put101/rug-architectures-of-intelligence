@@ -46,7 +46,7 @@
      +retrieval>
        isa learned-info
        MC1 =c
-       ;; Remove any existing value from the buffer? 
+       ;; Remove any existing value from the buffer. Prevent merging and strengthen bad play
      - action nil)
 
   ;; Condition: Retrieving state, but couldn't remember a move
@@ -55,6 +55,7 @@
      =goal>
        isa game-state
        state retrieving
+     ;; Failed to retrieve information
      ?retrieval>
        buffer  failure
      ?manual>
@@ -66,10 +67,13 @@
        cmd press-key
        key "s")
   
+  ;; Condition: Retrieving state, and could remember a move
+  ;; Action: Press the key with the action that was remembered
   (p remember-game
      =goal>
        isa game-state
        state retrieving
+     ;; Successfully retrieved information
      =retrieval>
        isa learned-info
        action =act
@@ -78,6 +82,7 @@
     ==>
      =goal>
        state nil
+     ;; Press the key with the action that was retrieved
      +manual>
        cmd press-key
        key =act
@@ -94,7 +99,8 @@
      ;; the best move
      @retrieval>)
   
-  
+  ;; Condition: 
+  ;; Action: 
   (p results-should-hit
      =goal>
        isa game-state
