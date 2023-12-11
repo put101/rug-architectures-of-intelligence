@@ -66,7 +66,7 @@
   )
   
   ;; Condition: Failed to remember a move
-  ;; Action: Press h with a probability of 0.5 or s with a probability of 
+  ;; Action: Press h with a probability of 0.5 or s with a probability of 0.5
   (p cant-remember-game-stay
     =goal>
       isa game-state
