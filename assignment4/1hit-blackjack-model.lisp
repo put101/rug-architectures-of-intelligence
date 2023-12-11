@@ -47,7 +47,8 @@
      - action nil
   )
 
-  ;; Condition: 
+  ;; Condition: Failed to remember a move
+  ;; Action: Press h with a probability of 0.5 or s with a probability of 0.5
   (p cant-remember-game-hit
     =goal>
       isa game-state
@@ -64,6 +65,8 @@
       key "h"
   )
   
+  ;; Condition: Failed to remember a move
+  ;; Action: Press h with a probability of 0.5 or s with a probability of 
   (p cant-remember-game-stay
     =goal>
       isa game-state
@@ -113,6 +116,8 @@
      @retrieval>
   )
 
+  ;; Condition: When we won the game and know the result. And we did hit.
+  ;; Action: Learn the combination of opponents score and our score and the action we took (hit)
   (p results-should-hit-win
      =goal>
        isa game-state
@@ -133,6 +138,8 @@
        action "h"
   )
 
+  ;; Condition: When we won the game and know the result. And we did stay.
+  ;; Action: Learn the combination of opponents score and our score and the action we took (stay)
   (p results-should-stay-win
      =goal>
        isa game-state
@@ -153,6 +160,9 @@
        action "s"
   )
 
+  ;; Condition: We know the result (game lost)
+  ;; Action: Don't learn anything. We only want to remember combinations that lead to 
+  ;;         a win (positive reinforcement). There are way too many combinations that lead to a loss.
   (p results-no-act-if-lose
      =goal>
        isa game-state
@@ -170,6 +180,7 @@
        action nil
   )
 
+  ;; Clear the imaginal chunk if the buffer is full
   (p clear-new-imaginal-chunk
       ?imaginal>
         state free
