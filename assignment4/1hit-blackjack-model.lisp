@@ -8,28 +8,23 @@
   
   ;; adjust these as needed
   (sgp :v nil :ans .2 :mp 15 :rt -5)
-
   
   ;; This type holds all the game info 
-  
   (chunk-type game-state
      mc1 mc2 mc3 mstart mtot mresult oc1 oc2 oc3 ostart otot oresult state)
   
   ;; This chunk-type should be modified to contain the information needed
   ;; for your model's learning strategy
-  
   (chunk-type learned-info  mstart ostart action)
   
   ;; Declare the slots used for the goal buffer since it is
   ;; not set in the model defintion or by the productions.
   ;; See the experiment code text for more details.
-  
   (declare-buffer-usage goal game-state :all)
   
   ;; Create chunks for the items used in the slots for the game
   ;; information and state
-  
-(define-chunks win lose bust retrieving start results)
+  (define-chunks win lose bust retrieving start results)
     
   ;; Provide a keyboard for the model's motor module to use
   (install-device '("motor" "keyboard"))
@@ -42,45 +37,48 @@
        state start
        mstart =ms
        ostart =os
-    ==>
+  ==>
      =goal>
        state retrieving
      +retrieval>
        isa learned-info
-        mstart =ms
-        ;;ostart =os
-       ;; Remove any existing value from the buffer? 
-     - action nil)
+       mstart =ms
+       ;; Remove any existing value from the buffer
+     - action nil
+  )
 
-   (p cant-remember-game-hit
-     =goal>
-       isa game-state
-       state retrieving
-     ?retrieval>
-       buffer  failure
-     ?manual>
-       state free
-    ==>
-     =goal>
-       state nil
-     +manual>
-       cmd press-key
-       key "h")
+  ;; Condition: 
+  (p cant-remember-game-hit
+    =goal>
+      isa game-state
+      state retrieving
+    ?retrieval>
+      buffer  failure
+    ?manual>
+      state free
+  ==>
+    =goal>
+      state nil
+    +manual>
+      cmd press-key
+      key "h"
+  )
   
-   (p cant-remember-game-stay
-     =goal>
-       isa game-state
-       state retrieving
-     ?retrieval>
-       buffer  failure
-     ?manual>
-       state free
-    ==>
-     =goal>
-       state nil
-     +manual>
-       cmd press-key
-       key "s")
+  (p cant-remember-game-stay
+    =goal>
+      isa game-state
+      state retrieving
+    ?retrieval>
+      buffer  failure
+    ?manual>
+      state free
+  ==>
+    =goal>
+      state nil
+    +manual>
+      cmd press-key
+      key "s"
+  )
   
   ;; Condition: Retrieving state, and could remember a move
   ;; Action: Press the key with the action that was remembered
@@ -94,7 +92,7 @@
        action =act ;; action that was remembered
      ?manual>
        state free
-    ==>
+  ==>
      =goal>
        state nil
      ;; Press the key with the action that was retrieved
@@ -112,7 +110,8 @@
      ;; may not be the best action to take in the current situation either because it was retrieved
      ;; due to noise or because the model does not yet have enough experience to accurately determine 
      ;; the best move
-     @retrieval>)
+     @retrieval>
+  )
 
   (p results-should-hit-win
      =goal>
@@ -121,14 +120,14 @@
        mresult win
        mstart  =ms
        ostart  =os
-      - mc3 nil ;; did hit
+       - mc3 nil ;; did hit
      ?imaginal>
        state free
     ==>
      =goal>
        state nil
      +imaginal> ;; learn this combination
-     isa learned-info
+       isa learned-info
        mstart =ms
        ostart =os
        action "h"
@@ -148,12 +147,13 @@
      =goal>
        state nil
      +imaginal>
-     isa learned-info
+       isa learned-info
        mstart =ms
        ostart =os
-       action "s")
+       action "s"
+  )
 
-(p results-no-act-if-lose
+  (p results-no-act-if-lose
      =goal>
        isa game-state
        state results
@@ -164,16 +164,17 @@
      =goal>
        state nil
 	   +imaginal>
-     isa learned-info
+       isa learned-info
        mstart nil
        ostart nil
-       action nil)
-(p clear-new-imaginal-chunk
-    ?imaginal>
-      state free
-      buffer full
-    ==>
-    -imaginal>
-)
+       action nil
+  )
 
+  (p clear-new-imaginal-chunk
+      ?imaginal>
+        state free
+        buffer full
+      ==>
+      -imaginal>
+  )
 )
