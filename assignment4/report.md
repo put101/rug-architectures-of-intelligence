@@ -17,6 +17,7 @@
 ## Describe which information you store in memory, and explain why. Why don't you store more or less information?
 
 Information stored in memory:
+
 - ostart: Opponent start sum
 - mstart: My start sum
 - action: Action taken
@@ -27,7 +28,9 @@ Less information: Can't remember the details needed to win the games.
 We took the approach at how we would learn to get better at blackjack and the simplest solution we came up to was to look at our score and our opponents score and determine based on past experiences if it was likely or unlikely to win/lose/bust if we take a card or not. So the individual cards/number would not matter to us so we skipped out on that for the model as well. This can be illustrated by the following figure, as in the end its a statics problem:
 
 Sweet spot: Bell curve
+
 ![](https://www.statology.org/wp-content/uploads/2020/04/bellCurve1.png)
+
 - Left: To little information saved, can't win games
 - Right: To much information saved, can only remember a few games. Not enough to win on average.
 - Middle: Sweet spot
