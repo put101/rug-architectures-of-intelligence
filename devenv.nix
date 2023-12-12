@@ -1,11 +1,8 @@
 {pkgs, ...}: {
-  packages = with pkgs; [
-    nengo-gui
-    python311Packages.nengo
-  ];
-
   languages.python = {
     enable = true;
+    package = pkgs.python39;
     venv.enable = true;
   };
+  # Install deps: pip install nengo-gui nengo
 }
