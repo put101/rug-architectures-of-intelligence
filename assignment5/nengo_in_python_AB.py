@@ -20,7 +20,7 @@ N_samples = 100  # number of sample points to use when finding decoders
 #specifications of neural ensembles: add information for ensembles C and D
 N_A = 50  # number of neurons in A
 N_B = 40  # number of neurons in B
-
+N_C = 50 # number of neurons in C
 
 def input(t):
     """The input to the system over time"""
@@ -31,6 +31,9 @@ def function_AB(x):
     """The function to compute between A and B."""
     return x * x - .5
 
+def function_BC(x):
+    """The function to compute between B and C."""
+    return x * .5
 
 ### 1. Functions for generating ensembles and running the model ###
 ###################################################################
@@ -143,22 +146,27 @@ def compute_decoder(encoder, gain, bias, function=lambda x: x):
 # get random gain and bias for the two populations
 gain_A, bias_A = generate_gain_and_bias(N_A, -1, 1, max_rates[0], max_rates[1])
 gain_B, bias_B = generate_gain_and_bias(N_B, -1, 1, max_rates[0], max_rates[1])
+gain_C, bias_C = generate_gain_and_bias(N_C, -1, 1, max_rates[0], max_rates[1])
 
 # create random encoders for the two populations
 encoder_A = [np.random.choice([-1, 1]) for i in range(N_A)]
 encoder_B = [np.random.choice([-1, 1]) for i in range(N_B)]
+encoder_C = [np.random.choice([-1, 1]) for i in range(N_C)]
 
 # find the decoders for A and B
 decoder_A = compute_decoder(encoder_A, gain_A, bias_A) #only to look at the represented value in A
 decoder_B = compute_decoder(encoder_B, gain_B, bias_B)
+decoder_C = compute_decoder(encoder_C, gain_C, bias_C)
 
 # Compute the weight matrix:
-# calculate decoders for A with the square func
-decoder_AB = compute_decoder(encoder_A, gain_A, bias_A, function=function_AB)
 
-# & combine with encoders for B
+# calculate decoders for A with the square func & combine with encoders for B
+decoder_AB = compute_decoder(encoder_A, gain_A, bias_A, function=function_AB)
 weightsAB = np.dot(decoder_AB, [encoder_B])
 
+# calculate decoders for B & combine with encoders for C
+decoder_BC = compute_decoder(encoder_B, gain_B, bias_B, function=function_BC)
+weightsBC = np.dot(decoder_BC, [encoder_C])
 
 
 ### 3. Running the simulation ###
@@ -172,6 +180,10 @@ v_B = [0.0] * N_B  # voltage for population B
 ref_B = [0.0] * N_B  # refractory period for population B
 input_B = [0.0] * N_B  # input for population B
 
+v_C = [0.0] * N_C  # voltage for population C
+ref_C = [0.0] * N_C  # refractory period for population C
+input_C = [0.0] * N_C  # input for population C
+
 # scaling factor for the post-synaptic filter
 pstc_scale = 1.0 - np.exp(-dt / t_pstc)
 
@@ -184,6 +196,10 @@ outputs_A = []
 ideal_B = []
 output_B = 0.0  # the decoded output value from population B
 outputs_B = []
+
+ideal_C = []
+output_C = 0.0  # the decoded output value from population C
+outputs_C = []
 
 t = 0
 while t < 10.0: 
@@ -241,8 +257,40 @@ while t < 10.0:
         if s:
             output_B += decoder_B[j][0] * pstc_scale
 
-        
+    ## Ensemble C
             
+    # Calculate input for C
+    
+    # decay all of the previous inputs (implementing the post-synaptic filter)
+    for j in range(N_C):
+        input_C[j] *= 1.0 - pstc_scale
+
+    # for each neuron that spikes in B, increase the input current
+    # of all the neurons it is connected to by the synaptic
+    # connection weight
+    for i, s in enumerate(spikes_B):
+        if s:
+            for j in range(N_C):
+                input_C[j] += weightsBC[i][j] * pstc_scale
+
+    # compute the total input into each neuron in population C
+    # (taking into account gain and bias)
+    total_C = [0] * N_C
+    for j in range(N_C):
+        total_C[j] = gain_C[j] * input_C[j] + bias_C[j]
+
+    # run population C and determine which neurons spike
+    spikes_C = run_neurons(total_C, v_C, ref_C)
+
+    # for each neuron in C that spikes, update our decoded value
+    # (also applying the same post-synaptic filter)
+    output_C *= 1.0 - pstc_scale
+    for j, s in enumerate(spikes_C):
+        if s:
+            output_C += decoder_C[j][0] * pstc_scale
+    
+    
+    
     ## Save for plotting:
     times.append(t)
     
@@ -251,6 +299,10 @@ while t < 10.0:
 
     ideal_B.append(function_AB(x))
     outputs_B.append(output_B)
+
+    # TODO: Right value? 
+    ideal_C.append(function_BC(function_AB(x)))
+    outputs_C.append(output_C)
 
     # output
     if t % 0.5 <= dt:
@@ -278,6 +330,8 @@ plt.plot(times, ideal_A, label="ideal_A")
 plt.plot(times, outputs_A, label="A")
 plt.plot(times, ideal_B, label="ideal_B")
 plt.plot(times, outputs_B, label="B")
+plt.plot(times, ideal_C, label="ideal_C")
+plt.plot(times, outputs_C, label="C")
 plt.title("Simulation results")
 plt.legend()
 plt.show()
