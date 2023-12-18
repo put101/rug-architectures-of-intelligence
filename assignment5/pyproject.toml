@@ -1,0 +1,16 @@
+[tool.poetry]
+name = "assignment5"
+version = "0.1.0"
+description = ""
+authors = ["put101 <tobiaspucher@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.9"
+nengo = "^4.0.0"
+nengo-gui = "^0.5.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
