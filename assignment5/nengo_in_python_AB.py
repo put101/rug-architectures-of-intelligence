@@ -300,7 +300,6 @@ while t < 10.0:
     ideal_B.append(function_AB(x))
     outputs_B.append(output_B)
 
-    # TODO: Right value? 
     ideal_C.append(function_BC(function_AB(x)))
     outputs_C.append(output_C)
 
@@ -334,5 +333,5 @@ plt.plot(times, ideal_C, label="ideal_C")
 plt.plot(times, outputs_C, label="C")
 plt.title("Simulation results")
 plt.legend()
-plt.show()
-
+plt.savefig("results.png")
+# plt.show()

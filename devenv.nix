@@ -7,6 +7,7 @@
     enable = true;
     package = pkgs.python39;
     venv.enable = true;
+    # poetry.enable = true;
   };
   # Install deps: pip install nengo-gui nengo
 }
