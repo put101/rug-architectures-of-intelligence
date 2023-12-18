@@ -1,4 +1,4 @@
-alerady executedL: 
+alerady executed: 
 ```
 pyenv versions
 pyenv install 3.9
@@ -12,4 +12,5 @@ poetry add nengo
 poetry add nengo-gui
 
 poetry install --no-root
+poetry shell
 ```
