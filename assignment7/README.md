@@ -45,3 +45,13 @@ The requirement of the above to work would be that for each neuron in the ordere
 - same tuning curve saturation point
 
 ## Q2: Learning weights
+
+### Question 2a: What do you think the connection weights will be in this case? You can check using the code above.
+1x10 matrix of zeros. This is appearently the default bebahivour of nengo which assumes that these 10 weights will be used for all 10 pre-neurons. 
+According to the documentation the transform is a linear transform mapping the pre function output to the post input. And because the post input has a dimension of 10 and a scalar 0 is given it is used to form the 1x10 matrix of zeros.
+
+
+### Question 2b: I set the learning rate to a rather low value, so you can observe the learning (the default value is 1e-4). Try what happens if you set the learning rate to .01 or .1. Can you think of an explanation?
+
+These learning rates are too high and the error and ouput start to oscillate. This is because the weights get adjusted too much and therefore the output overshoots and so does the error, therefore correcting in the opposite direction where it again overshoots creating a feedback loop that oscillates. All this happens with a faster frequency than the given sinus stimuli because of the noise in the stimuli that gets amplified by the weights and not the sinus itself. The sinus can be observed as the mean of the oscillating ouput.
+
