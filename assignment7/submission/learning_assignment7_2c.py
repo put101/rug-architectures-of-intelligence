@@ -1,10 +1,14 @@
+# Team 77
+# - Tobias Pucher (S5751659)
+# - Matthias Heiden (S5751616)
+
 import nengo
 import numpy as np
 
 model = nengo.Network()
 with model:
 
-    # stimulus node, with fast sine
+    # stimulus node, with square
     stim = nengo.Node(lambda t: t * t)
 
     # non-learning part
