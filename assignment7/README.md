@@ -50,3 +50,5 @@ These learning rates are too high and the error and ouput start to oscillate. Th
 - In alphabet-arithmetic the error would come from the difference between the predicted result and the actual correct result. This requires the model to do backpropagation, updating the weights to minimize the error. 
 
 - Alternatively: Use symbol vectors: tuning curves of neurons are then dependant on vector representations instead of a single number.
+- Use a Semantic Pointer Architecture: Semantic pointers can move around and can be combine with other semantic pointers.
+  - Semantic pointers can also be manipulated (e.g. alphabet-arithmetic)
