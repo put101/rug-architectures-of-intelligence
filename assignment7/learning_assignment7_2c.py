@@ -5,7 +5,7 @@ model = nengo.Network()
 with model:
 
     # stimulus node, with fast sine
-    stim = nengo.Node(lambda t: t * t)
+    stim = nengo.Node(lambda t: np.sin(t*2*np.pi))
 
     # non-learning part
     pre = nengo.Ensemble(n_neurons=10, dimensions=1)
@@ -32,7 +32,8 @@ with model:
 
     # calculate the error
     # -1 because we want the error to have the correct sign
-    e0 = nengo.Connection(pre_learning, error, transform=-1)
+    # also learn the square
+    e0 = nengo.Connection(pre_learning, error, transform=-1, function=np.square)
     e1 = nengo.Connection(post_learning, error, transform=1)
 
     # build model without actually running it
