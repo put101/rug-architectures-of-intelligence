@@ -1,26 +1,14 @@
-```
-poetry config virtualenvs.in-project true
-```
+## Team 77
+- Tobias Pucher (S5751659)
+- Matthias Heiden (S5751616)
 
-
-# Notes
-
-symbols = semantic pointers
-
-PES() function in slides: 
-    - contribution of neuron j to total Error 
-
-each ensamble is a "layer" as refered to in classic neural networks.
-two ways to connect neurons of ensambles:
-- all to all 5x5 = 25 connections
-- single connection that only looks at decoded value: looks at spikes
-independent of result.
+---
 
 # Questions
 ## Q1:Exploring weights
 ### Question 1a: why do we get a 10x10 matrix? What do the numbers represent?
 
-- The dimensions are due to the fact that the connection is a matrix of weights. Both the pre- and post-learning ensambles or "layers" have 10 neurons and each neuron is connected to each other. Each column of the matrix stores the weights from that pre-neuron to all possible post-learning neurons. We have 10 which gives 10 columns with 10 rows each because post has 10 neurons. In total 100 weights are present. For more dimensions the matrix dimensions would increase but it would be n-columns = n-neurons x n-dimensions. <- TODO: i am not sure if this is fully correct
+- The dimensions are due to the fact that the connection is a matrix of weights. Both the pre- and post-learning ensambles or "layers" have 10 neurons and each neuron is connected to each other. Each column of the matrix stores the weights from that pre-neuron to all possible post-learning neurons. We have 10 which gives 10 columns with 10 rows each because post has 10 neurons. In total 100 weights are present. For more dimensions the matrix dimensions would increase.
 
 - The numbers represent the multiplicative "synaptic weight" factor of each individual input neuron to each individal output neuron. They are initialized randomly in a range around zero. Because of the mutliplication, each weight "scales" the signal (spike) and changes the "sign" as well.
   
@@ -47,7 +35,7 @@ The requirement of the above to work would be that for each neuron in the ordere
 ## Q2: Learning weights
 
 ### Question 2a: What do you think the connection weights will be in this case? You can check using the code above.
-1x10 matrix of zeros. This is appearently the default bebahivour of nengo which assumes that these 10 weights will be used for all 10 pre-neurons. 
+1x10 matrix of zeros. This is appearently the default behaviour of nengo which assumes that these 10 weights will be used for all 10 pre-neurons. 
 According to the documentation the transform is a linear transform mapping the pre function output to the post input. And because the post input has a dimension of 10 and a scalar 0 is given it is used to form the 1x10 matrix of zeros.
 
 
@@ -55,3 +43,8 @@ According to the documentation the transform is a linear transform mapping the p
 
 These learning rates are too high and the error and ouput start to oscillate. This is because the weights get adjusted too much and therefore the output overshoots and so does the error, therefore correcting in the opposite direction where it again overshoots creating a feedback loop that oscillates. All this happens with a faster frequency than the given sinus stimuli because of the noise in the stimuli that gets amplified by the weights and not the sinus itself. The sinus can be observed as the mean of the oscillating ouput.
 
+### Question 2c: We now developed a model that learns the connection weights between two ensembles. However, to do so, we had to specify the error: basically reintroducing pre-calculated connection weights. Think about how this would work when doing, for example, alphabet-arithmetic. Where does the error signal come from in that case? What are therefore the requirements for using supervised learning?
+
+- Supervised learning requires a defined error metric with which the model can be evaluated. It should quantify the difference between the predicted result and the actual correct result from the labelled training data. This will then be used to calculate the error signal.
+
+- In alphabet-arithmetic the error would come from the difference between the predicted result and the actual correct result. This requires the model to do backpropagation, updating the weights to minimize the error. 
