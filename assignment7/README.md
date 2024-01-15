@@ -48,3 +48,5 @@ These learning rates are too high and the error and ouput start to oscillate. Th
 - Supervised learning requires a defined error metric with which the model can be evaluated. It should quantify the difference between the predicted result and the actual correct result from the labelled training data. This will then be used to calculate the error signal.
 
 - In alphabet-arithmetic the error would come from the difference between the predicted result and the actual correct result. This requires the model to do backpropagation, updating the weights to minimize the error. 
+
+- Alternatively: Use symbol vectors: tuning curves of neurons are then dependant on vector representations instead of a single number.
